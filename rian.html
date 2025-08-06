@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tanong: Yes or No</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    #yesBtn, #noBtn {
+      padding: 15px 30px;
+      font-size: 20px;
+      margin: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+    }
+
+    #noBtn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 10px;
+    }
+
+    #videoContainer {
+      display: none;
+      margin-top: 30px;
+    }
+
+    video {
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Papayagan mo naba ako manligaw?</h1>
+  <button id="yesBtn">Yes</button>
+  <button id="noBtn">No</button>
+
+  <div id="videoContainer">
+    <video id="video" controls>
+      <source src="tagumpay.mp4" type="video/mp4">
+      Hindi ma-load ang video mo.
+    </video>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const videoContainer = document.getElementById('videoContainer');
+    const video = document.getElementById('video');
+
+    let yesFontSize = 20;
+    let yesPadding = 15;
+
+    noBtn.addEventListener('click', () => {
+      yesFontSize += 5;
+      yesPadding += 5;
+      yesBtn.style.fontSize = yesFontSize + "px";
+      yesBtn.style.padding = yesPadding + "px " + (yesPadding * 2) + "px";
+    });
+
+    yesBtn.addEventListener('click', () => {
+      videoContainer.style.display = 'block';
+      video.play();
+    });
+  </script>
+
+</body>
+</html>

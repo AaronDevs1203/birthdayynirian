@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday na ni Rian !!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f7cac9, #92a8d1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      background: #fff;
+      border: 2px solid #d3d3d3;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      background: #d3d3d3;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.6s ease;
+      z-index: 2;
+    }
+
+    .letter {
+      position: relative;
+      top: 0;
+      width: 100%;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+      transition: transform 0.8s ease;
+      text-align: center;
+      font-size: 16px;
+      overflow-wrap: break-word;
+      line-height: 1.6;
+      z-index: 1;
+      transform: translateY(100%);
+    }
+
+    .container.open .flap {
+      transform: rotateX(-180deg);
+    }
+
+    .container.open .letter {
+      transform: translateY(0);
+    }
+
+    .confetti {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      z-index: 99;
+    }
+
+    .next-btn {
+      padding: 10px 25px;
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .next-btn:hover {
+      background-color: #dbdbdb;
+      color: rgb(33, 33, 33)
+    }
+
+    @media (max-width: 500px) {
+      .letter {
+        font-size: 14px;
+      }
+
+      .next-btn {
+        font-size: 0.9em;
+        padding: 8px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="envelopeContainer">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="letter" id="letterMessage">
+        🎉 <strong>Happy Birthday!</strong> 🎉<br><br>
+        <span id="messageText">
+          🎉 Happy Birthday, Rian! 🎂<br><br>
+          Hope na maenjoy mo yung araw na to dahil birthday mo<br>
+          and wish ko for you wag kang magsasawang bantayan mga pamangkin/pinsan mo.<br>
+          Manatiling kalang sa kung sino ka rian. Nandito lang ako lagi para sayo.<br>
+          I know marami tayong mga lapses sa ating dalawa and hope ma-fulfill natin lahat ng pagkukulang natin.<br>
+          Thankyou us kasi kahit na sa tagal natin di nag usap nanatili ka parin at the same Rian pa rin at tinanggap mo parin ako.<br>
+          Sorry kasi hinayaan kitang pagdaanan kung ano man napagdaanan natin — and ayan eto ako ngayon, bumalik..<br>
+          Di nako mawawala pa... at paninindigan ko na itong palagi kong sinasabi nayan. Magtiwala ka lang please??<br>
+          And wish ko for us is maging masaya lang tayo kung ano lang meron tayo at kung ano tayo.<br>
+          Soon magiging tayo den. Imamanifest ko! 🤞
+        </span>
+      </div>
+    </div>
+
+    <button class="next-btn" onclick="window.location.href='rian.html'">Next Page</button>
+  </div>
+
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+
+  <script>
+    const container = document.getElementById('envelopeContainer');
+    const messageSpan = document.getElementById('messageText');
+    const confettiCanvas = document.getElementById('confettiCanvas');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const customMessage = urlParams.get('msg');
+    if (customMessage) messageSpan.innerHTML = decodeURIComponent(customMessage);
+
+    let opened = false;
+
+    container.addEventListener('click', () => {
+      if (opened) return;
+      container.classList.add('open');
+      launchConfetti();
+      opened = true;
+    });
+
+    // Confetti animation
+    const ctx = confettiCanvas.getContext("2d");
+    let confetti = [];
+
+    function launchConfetti() {
+      confetti = Array.from({ length: 150 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight - window.innerHeight,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 50 + 50,
+        color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+        tilt: Math.random() * 10 - 10,
+        tiltAngle: 0,
+        tiltAngleIncrement: Math.random() * 0.07 + 0.05,
+      }));
+
+      animateConfetti();
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confetti.forEach(c => {
+        c.tiltAngle += c.tiltAngleIncrement;
+        c.y += Math.cos(c.d) + 1;
+        c.tilt = Math.sin(c.tiltAngle) * 15;
+
+        ctx.beginPath();
+        ctx.lineWidth = c.r;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
+        ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 2);
+        ctx.stroke();
+      });
+
+      confetti = confetti.filter(c => c.y < window.innerHeight);
+      if (confetti.length > 0) requestAnimationFrame(animateConfetti);
+    }
+
+    function resizeCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+  </script>
+</body>
+</html>
