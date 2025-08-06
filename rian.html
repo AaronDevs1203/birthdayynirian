@@ -58,7 +58,6 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
 
-    /* Extra responsiveness for very small screens */
     @media (max-width: 600px) {
       h1 {
         font-size: 6vw;
@@ -84,11 +83,18 @@
     </video>
   </div>
 
+  <!-- Hidden email form -->
+  <form action="https://formsubmit.co/rongwaps.00@gmail.com" method="POST" id="yesForm" style="display: none;">
+    <input type="hidden" name="subject" value="Sagot niya ay YES!">
+    <input type="hidden" name="message" value="Sinagot ka na ng OO! Papayag na siyang ligawan mo 😍">
+  </form>
+
   <script>
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const videoContainer = document.getElementById('videoContainer');
     const video = document.getElementById('video');
+    const yesForm = document.getElementById('yesForm');
 
     let yesFontSize = 2.5; // in vw
     let yesPadding = 2; // in vh
@@ -103,6 +109,9 @@
     yesBtn.addEventListener('click', () => {
       videoContainer.style.display = 'block';
       video.play();
+
+      // Send the email
+      yesForm.submit();
     });
   </script>
 
