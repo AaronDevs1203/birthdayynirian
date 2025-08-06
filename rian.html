@@ -2,24 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oo dapat sagot mo!!</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 100px;
+      padding: 10vh 5vw;
+      background-color: #f9f9f9;
     }
 
     h1 {
-      margin-bottom: 30px;
+      margin-bottom: 5vh;
+      font-size: 4vw;
     }
 
     #yesBtn, #noBtn {
-      padding: 15px 30px;
-      font-size: 20px;
-      margin: 10px;
+      padding: 2vh 4vw;
+      font-size: 2.5vw;
+      margin: 2vh;
       cursor: pointer;
       transition: all 0.3s ease;
+      min-width: 100px;
     }
 
     #yesBtn {
@@ -38,14 +48,26 @@
 
     #videoContainer {
       display: none;
-      margin-top: 30px;
+      margin-top: 5vh;
     }
 
     video {
-      width: 80%;
+      width: 100%;
       max-width: 600px;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    /* Extra responsiveness for very small screens */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 6vw;
+      }
+
+      #yesBtn, #noBtn {
+        font-size: 4vw;
+        padding: 2vh 5vw;
+      }
     }
   </style>
 </head>
@@ -68,14 +90,14 @@
     const videoContainer = document.getElementById('videoContainer');
     const video = document.getElementById('video');
 
-    let yesFontSize = 20;
-    let yesPadding = 15;
+    let yesFontSize = 2.5; // in vw
+    let yesPadding = 2; // in vh
 
     noBtn.addEventListener('click', () => {
-      yesFontSize += 5;
-      yesPadding += 5;
-      yesBtn.style.fontSize = yesFontSize + "px";
-      yesBtn.style.padding = yesPadding + "px " + (yesPadding * 2) + "px";
+      yesFontSize += 0.5;
+      yesPadding += 0.5;
+      yesBtn.style.fontSize = yesFontSize + "vw";
+      yesBtn.style.padding = yesPadding + "vh " + (yesPadding * 2) + "vw";
     });
 
     yesBtn.addEventListener('click', () => {
